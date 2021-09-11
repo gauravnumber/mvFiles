@@ -1,7 +1,6 @@
 #!/bin/bash
 
 main() {
-
 	if [ $# -eq 0 ]; then
 		DEST="."
 	else
@@ -9,16 +8,10 @@ main() {
 	fi
 
 	array=($(fd -d 1 --type f . "$DEST" | sed -e 's/.*\.//' | sed -e 's/.*\///' | sort -u ))
-	# array=($(fd -d 1 --type f . $1 | sed -e 's/.*\.//' | sed -e 's/.*\///' | sort -u ))
-
-	# echo "${array[@]}"
-	# echo "$DEST"
 
 	for (( i = 0; i < ${#array[@]}; i++ )); do
 		mkdir -p "$DEST"/"${array[$i]}"
 		mv -v "$DEST"/*".${array[$i]}" "$DEST"/"${array[$i]}"
-		# mkdir -p $1/${array[$i]}
-		# mv -v $1/*".${array[$i]}" $1/"${array[$i]}"
 	done
 }
 
