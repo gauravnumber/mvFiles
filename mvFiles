@@ -1,0 +1,18 @@
+#!/bin/bash
+
+main() {
+	if [ $# -eq 0 ]; then
+		DEST="."
+	else
+		DEST=$1
+	fi
+
+	array=($(fd -d 1 --type f . "$DEST" | sed -e 's/.*\.//' | sed -e 's/.*\///' | sort -u ))
+
+	for (( i = 0; i < ${#array[@]}; i++ )); do
+		mkdir -p "$DEST"/"${array[$i]}"
+		mv -v "$DEST"/*".${array[$i]}" "$DEST"/"${array[$i]}"
+	done
+}
+
+main "$@"
