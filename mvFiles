@@ -11,7 +11,7 @@ main() {
 
 	for (( i = 0; i < ${#array[@]}; i++ )); do
 		mkdir -p "$DEST"/"${array[$i]}"
-		mv -v "$DEST"/*".${array[$i]}" "$DEST"/"${array[$i]}"
+		mv -vn "$DEST"/*".${array[$i]}" "$DEST"/"${array[$i]}"
 	done
 }
 
