@@ -7,11 +7,25 @@ main() {
 		DEST=$1
 	fi
 
-	array=($(fd -d 1 --type f . "$DEST" | sed -e 's/.*\.//' | sed -e 's/.*\///' | sort -u ))
+	array=($(fd -d 1 --type f . "$DEST" | sed -e 's/.*\.//' | sed -e 's/.*\///' | sort -u))
 
-	for (( i = 0; i < ${#array[@]}; i++ )); do
+	# echo $DEST
+	# echo $array
+	for ((i = 0; i < ${#array[@]}; i++)); do
 		mkdir -p "$DEST"/"${array[$i]}"
-		mv -vn "$DEST"/*".${array[$i]}" "$DEST"/"${array[$i]}"
+		# no clobber
+		# mv -v "$DEST"/*".${array[$i]}" "$DEST"/"${array[$i]}"
+
+		# echo '$DEST'/*.${array[$i]} "$DEST"/*.${array[$i]}
+		# echo '"$DEST"/"${array[$i]}"' "$DEST"/"${array[$i]}"
+
+		# echo "temp-$i"
+		mkdir -p "temp-$i"
+		mv -n "$DEST"/*.${array[$i]} "temp-$i"
+		# echo '$DEST' "$DEST"
+		# echo "$DEST"/"${array[$i]}"
+		move "temp-$i" "$DEST"/"${array[$i]}"
+		rm -rf "temp-$i"
 	done
 }
 
